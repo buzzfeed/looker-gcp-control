@@ -4,7 +4,7 @@ view: bigquery_data_access {
       SELECT
         *
       FROM
-        `gcp_logs.cloudaudit_googleapis_com_data_access_*`
+        `bq_query_cost.cloudaudit_googleapis_com_data_access_*`
       WHERE
         {% condition date_filter %} PARSE_TIMESTAMP('%E4Y%m%d', _TABLE_SUFFIX) {% endcondition %} ;;
   }
@@ -105,6 +105,7 @@ view: bigquery_data_access {
 
   measure: number_of_expensive_queries {
     view_label: "BigQuery Data Access: Query Statistics"
+    description: "Queries over 30 GB."
     type: count
     filters: {
       field: bigquery_data_access_job_statistics.billed_gigabytes
